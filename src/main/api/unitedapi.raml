@@ -1,0 +1,91 @@
+#%RAML 0.8
+title: Sample API
+baseUri: http://localhost:8081/api
+resourceTypes: 
+  - collection:
+      get: 
+        is: [basicAuth]
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                example: !include examples/<<collection-example>>
+  - collectionItem:
+        get: 
+          is: [oAuth]
+          responses: 
+            200: 
+              body: 
+                application/json: 
+                  example: !include examples/<<collectionItem-exmaple>>
+traits: 
+ - basicAuth:
+      headers: 
+         uniqueid:
+           required: true
+         sourceapp:
+           required: true  
+      queryParameters: 
+         destination:
+           minLength: 3
+           maxLength: 3
+ - oAuth:          
+     headers: 
+           uniqueid:
+             required: true
+           sourceapp:
+             required: true 
+                            
+/unitedFlightsbydestination:
+  type: 
+    collection:
+      collection-example: unitedFlightsbydestination-get-response.json
+/deltaflightsbydestionation: 
+  type: 
+    collection:
+      collection-example: deltaflightsbydestination-get-response.json
+            
+#  /{destination}:
+#    get: 
+#      headers: 
+#       uniqueid:
+#         required: true
+#       sourceapp:
+#         required: true 
+#      responses: 
+#        200: 
+#          body: 
+#            application/json: 
+#              example: !include examples/unitedFlightsbydestination-get-response.json           
+            
+/listAllunitedFlights:
+ type: 
+  collectionItem:
+    collectionItem-exmaple: listAllunitedFlights-get-response.json
+#  get: 
+#    headers: 
+#     uniqueid:
+#       required: true
+#     sourceapp:
+#       required: true 
+#    responses: 
+#      200: 
+#        body: 
+#          application/json: 
+#            example: !include examples/listAllunitedFlights-get-response.json 
+
+/listAlldeltaflights:     
+  type: 
+    collectionItem:
+     collectionItem-exmaple: listAlldeltaflights-get-response.json
+#  get: 
+#    headers: 
+#     uniqueid:
+#       required: true
+#     sourceapp:
+#       required: true 
+#    responses: 
+#      200: 
+#        body: 
+#          application/json:
+#            example: !include examples/listAlldeltaflights-get-response.json 
